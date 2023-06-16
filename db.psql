@@ -1,0 +1,73 @@
+CREATE TABLE IF NOT EXISTS "AssignedStaffJobs" (
+    "staff_id" BIGINT PRIMARY KEY NOT NULL UNIQUE,
+    "job_id" BIGINT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS "Role" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(55) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "JobStatus"(
+    "id" SERIAL PRIMARY KEY,
+    "title" VARCHAR(70) NOT NULL,
+    "description" VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS "Staff" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(70) NOT NULL,
+    "role" BIGINT NOT NULL,
+    "email" VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+    "profile_img" VARCHAR(255),
+    FOREIGN KEY ("role") REFERENCES "Role"("id")
+);
+
+CREATE TABLE IF NOT EXISTS "ClientStatus"(
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(50) NOT NULL,
+    "description" VARCHAR(255)
+);
+
+
+CREATE TABLE IF NOT EXISTS "Client" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(70) NOT NULL,
+    "email" VARCHAR(255) UNIQUE NOT NULL,
+    "status" VARCHAR(255),
+    "revenue_generated" INTEGER DEFAULT 0,
+    "phone_number" INTEGER
+);
+
+
+CREATE TABLE IF NOT EXISTS "Job" (
+    "id" SERIAL PRIMARY KEY,
+    "title" VARCHAR(55) NOT NULL,
+    "job_description" VARCHAR(255) NOT NULL,
+    "status" BIGINT UNIQUE,
+    "client" BIGINT UNIQUE,
+    FOREIGN KEY ("client") REFERENCES "Client"("id"),
+    FOREIGN KEY ("status") REFERENCES "JobStatus"("id")
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "Tag"(
+    "id" SERIAL PRIMARY KEY,
+    "title" VARCHAR(35),
+    "description" VARCHAR(255)
+);
+
+
+CREATE TABLE IF NOT EXISTS "JobTags"(
+    "job_id" BIGINT PRIMARY KEY NOT NULL,
+    "tag_id" BIGINT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "JobStatus"(
+    "id" SERIAL PRIMARY KEY,
+    "title" VARCHAR(60) NOT NULL,
+    "description" VARCHAR(255)
+);
+
